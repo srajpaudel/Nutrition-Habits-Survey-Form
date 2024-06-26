@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrition Habits Survey</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Adjust the margin-bottom for the specific form group */
+    #dropdown-intake {
+      margin-bottom: 10px; /* Adjust as needed */
+    }
+  </style>
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      // Validate form inputs (can add more validation as needed)
+      var name = document.getElementById('name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var age = document.getElementById('number').value.trim();
+      var supplementsYes = document.getElementById('supplements-yes');
+      var supplementsNo = document.getElementById('supplements-no');
+      var restrictionsYes = document.getElementById('restrictions-yes');
+      var restrictionsNo = document.getElementById('restrictions-no');
+      var dietaryRestrictions = restrictionsYes.checked || restrictionsNo.checked;
+      var supplements = supplementsYes.checked || supplementsNo.checked;
+      var nutrients = [];
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      checkboxes.forEach(function(checkbox) {
+        nutrients.push(checkbox.value);
+      });
+      var comments = document.getElementById('comments').value.trim();
+      var fruitVegetableIntake = document.getElementById('dropdown-intake').value;
+      var dietType = document.getElementById('dropdown-diet').value;
+
+      // Basic validation: Check if required fields are filled
+      if (age === '' || !supplements || !dietaryRestrictions || fruitVegetableIntake === '' || dietType === '') {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      // Proceed with form submission (can redirect or handle data submission)
+      document.getElementById('survey-form').style.display = 'none'; // Hide form
+      document.getElementById('survey-complete-message').style.display = 'block'; // Show survey complete message
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Nutrition Habits Survey</h1>
+    <p>Take our quick survey to share insights about your nutrition habits!</p>
+    <form id="survey-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="name">Name (Optional)</label>
+        <input id="name" type="text" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email (Optional)</label>
+        <input id="email" type="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="number">Age *</label>
+        <input id="number" type="number" min="1" max="99" placeholder="Enter your age" required>
+      </div>
+      <div class="form-group">
+        <label>Have you ever taken nutritional supplements? *</label>
+        <div class="radio-supplements">
+          <input type="radio" id="supplements-yes" name="supplements" value="yes" required>
+          <label for="supplements-yes">Yes</label>
+          <input type="radio" id="supplements-no" name="supplements" value="no" required>
+          <label for="supplements-no">No</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Do you have any dietary restrictions? *</label>
+        <div class="radio-restrictions">
+          <input type="radio" id="restrictions-yes" name="restrictions" value="yes" required>
+          <label for="restrictions-yes">Yes</label>
+          <input type="radio" id="restrictions-no" name="restrictions" value="no" required>
+          <label for="restrictions-no">No</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="dropdown-nutrient">Which nutrient do you prioritize the most in your diet? *</label>
+        <select id="dropdown-nutrient" required>
+          <option value="">Select one...</option>
+          <option value="pro">Protein</option>
+          <option value="carb">Carbohydrates</option>
+          <option value="fat">Fat</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dropdown-intake">How many servings of fruits and vegetables do you typically consume daily? *</label>
+        <select id="dropdown-intake" required>
+          <option value="">Select one...</option>
+          <option value="less-than-3">Less than 3 servings</option>
+          <option value="3-to-5">3 to 5 servings</option>
+          <option value="more-than-5">More than 5 servings</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dropdown-diet">What type of diet do you follow? *</label>
+        <select id="dropdown-diet" required>
+          <option value="">Select one...</option>
+          <option value="meat-eater">Meat eater</option>
+          <option value="plant-based">Plant-based</option>
+          <option value="mixed">Mix of both</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="comments">Any additional comments or dietary preferences?</label>
+        <textarea id="comments" rows="4" placeholder="Enter your comments"></textarea>
+      </div>
+      <div class="form-group">
+        <input id="submit" type="submit" value="Submit">
+      </div>
+    </form>
+    
+    <!-- Survey Complete Message -->
+    <div id="survey-complete-message" class="survey-complete-message" style="display: none;">
+      <h2>Thank you for completing the survey!</h2>
+      <p>Your responses have been submitted successfully.</p>
+      <!-- Optionally, you can add more content or instructions here -->
+    </div>
+  </div>
+</body>
+</html>
